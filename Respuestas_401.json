@@ -1,0 +1,325 @@
+{
+	"info": {
+		"_postman_id": "b7d7ec13-ac5e-4502-9b04-c892023ce943",
+		"name": "Directorio Federado Copy 2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "34404218"
+	},
+	"item": [
+		{
+			"name": "Crear Llave",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Asegúrate de que la respuesta está en el formato JSON\r",
+							"let responseData = pm.response.json();\r",
+							"pm.test(\"Status code is 401\", function () {\r",
+							"    pm.response.to.have.status(401);\r",
+							"});\r",
+							"\r",
+							"// Extrae el valor de \"id\" del objeto \"data\"\r",
+							"let idValue = responseData.data.id;\r",
+							"\r",
+							"\r",
+							"// Guarda el valor de \"id\" en una variable de entorno o de colección\r",
+							"pm.environment.set(\"id\", idValue);\r",
+							"\r",
+							"// Extrae los valores del objeto \"account\"\r",
+							"let accountType = responseData.data.account.accountType;\r",
+							"let accountNumber = responseData.data.account.accountNumber;\r",
+							"let signer = responseData.data.account.signer;\r",
+							"\r",
+							"// Guarda los valores en variables de entorno o de colección\r",
+							"pm.environment.set(\"accountType\", accountType);\r",
+							"pm.environment.set(\"accountNumber\", accountNumber);\r",
+							"pm.environment.set(\"signer\", signer);\r",
+							"\r",
+							"\r",
+							"// Define el array de posibles valores\r",
+							"let accountTypes = [\"SAVING_ACCOUNT\", \"CURRENT_ACCOUNT\", \"LOW_DEPOSIT\", \"ORDINARY_DEPOSIT\", \"INCLUSIVE_LOW_AMOUNT\"];\r",
+							"\r",
+							"// Genera un índice aleatorio\r",
+							"let randomIndex = Math.floor(Math.random() * accountTypes.length);\r",
+							"\r",
+							"// Selecciona un valor aleatorio del array\r",
+							"let randomAccountType = accountTypes[randomIndex];\r",
+							"\r",
+							"// Guarda el valor en una variable de entorno o de colección\r",
+							"pm.environment.set(\"randomAccountType\", randomAccountType);\r",
+							"\r",
+							"// Si prefieres usar una variable de colección, usa:\r",
+							"// pm.collectionVariables.set(\"randomAccountType\", randomAccountType);\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const randomNumber = _.random(10000000,99999999)\r",
+							"pm.variables.set(\"randomNumber\", randomNumber );\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "client-id",
+						"value": "{{client-id}}"
+					},
+					{
+						"key": "client-secret",
+						"value": "{{client-secret}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"user\": {\r\n    \"firstName\": \"Jhony 332\",\r\n    \"secondName\": \"Estevan 3\",\r\n    \"firstLastName\": \"Agudelo 3\",\r\n    \"secondLastName\": \"Villada 3\",\r\n    \"documentType\": \"CC\",\r\n    \"documentNumber\": \"{{randomNumber}}\",\r\n    \"userType\": \"PJ\",\r\n    \"merchantName\": \"d552\"\r\n  },\r\n  \"account\": {\r\n    \"accountType\": \"{{randomAccountType}}\",\r\n    \"accountNumber\": \"{{randomNumber}}\",\r\n    \"entityCode\": \"1020\",\r\n    \"signer\":\"{{$randomPassword}}\"\r\n  },\r\n  \"key\": {\r\n    \"keyType\": \"ID\",\r\n    \"keyValue\": \"{{randomNumber}}\"\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base-url}}/fd/entities/2/keys",
+					"host": [
+						"{{base-url}}"
+					],
+					"path": [
+						"fd",
+						"entities",
+						"2",
+						"keys"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Actualizar Llave",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Genera un valor aleatorio entre 0 y 1\r",
+							"let randomValue = Math.random();\r",
+							"\r",
+							"// Determina el estado basado en el valor aleatorio\r",
+							"let status = randomValue < 0.5 ? \"LOCK\" : \"ACTIVE\";\r",
+							"\r",
+							"// Guarda el estado en una variable de entorno o de colección\r",
+							"pm.environment.set(\"randomStatus\", status);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let responseData = pm.response.json();\r",
+							"pm.test(\"Status code is 401\", function () {\r",
+							"    pm.response.to.have.status(401);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "client-id",
+						"value": "{{client-id}}"
+					},
+					{
+						"key": "client-secret",
+						"value": "{{client-secret}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"status\": \"{{randomStatus}}\",\r\n  \"account\": {\r\n    \"accountType\": \"{{accountType}}\",\r\n            \"accountNumber\": \"{{accountNumber}}\",\r\n            \"signer\": \"{{signer}}\"\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base-url}}/fd/entities/2/keys/{{id}}",
+					"host": [
+						"{{base-url}}"
+					],
+					"path": [
+						"fd",
+						"entities",
+						"2",
+						"keys",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Consultar Llave",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let responseData = pm.response.json();\r",
+							"pm.test(\"Status code is 401\", function () {\r",
+							"    pm.response.to.have.status(401);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "client-id",
+						"value": "{{client-id}}"
+					},
+					{
+						"key": "client-secret",
+						"value": "{{client-secret}}"
+					}
+				],
+				"url": {
+					"raw": "{{base-url}}/fd/entities/3/keys?keyType=ID&keyValue=90009012",
+					"host": [
+						"{{base-url}}"
+					],
+					"path": [
+						"fd",
+						"entities",
+						"3",
+						"keys"
+					],
+					"query": [
+						{
+							"key": "keyType",
+							"value": "ID"
+						},
+						{
+							"key": "keyValue",
+							"value": "90009012"
+						},
+						{
+							"key": "institutionId",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Consultar Llave id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let responseData = pm.response.json();\r",
+							"pm.test(\"Status code is 401\", function () {\r",
+							"    pm.response.to.have.status(401);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "client-id",
+						"value": "{{client-id}}"
+					},
+					{
+						"key": "client-secret",
+						"value": "{{client-secret}}"
+					}
+				],
+				"url": {
+					"raw": "{{base-url}}/fd/entities/2/keys/{{id}}",
+					"host": [
+						"{{base-url}}"
+					],
+					"path": [
+						"fd",
+						"entities",
+						"2",
+						"keys",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base-url",
+			"value": "https://directoriofederado.crt.transfiya.com.co/ext/transfiya",
+			"type": "string"
+		},
+		{
+			"key": "client-id",
+			"value": "73cd505c2a470195b66dd32323bd5a96"
+		},
+		{
+			"key": "client-secret",
+			"value": "3aaef6b22a2e6c3c02e361d60db39aa0"
+		}
+	]
+}
