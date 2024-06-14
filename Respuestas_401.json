@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "b7d7ec13-ac5e-4502-9b04-c892023ce943",
-		"name": "Directorio Federado Copy 2",
+		"_postman_id": "75ddfbf8-c01a-4c54-845a-a9f6567f19db",
+		"name": "Codigos 401",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "34404218"
 	},
@@ -19,41 +19,8 @@
 							"    pm.response.to.have.status(401);\r",
 							"});\r",
 							"\r",
-							"// Extrae el valor de \"id\" del objeto \"data\"\r",
-							"let idValue = responseData.data.id;\r",
-							"\r",
-							"\r",
-							"// Guarda el valor de \"id\" en una variable de entorno o de colección\r",
-							"pm.environment.set(\"id\", idValue);\r",
-							"\r",
-							"// Extrae los valores del objeto \"account\"\r",
-							"let accountType = responseData.data.account.accountType;\r",
-							"let accountNumber = responseData.data.account.accountNumber;\r",
-							"let signer = responseData.data.account.signer;\r",
-							"\r",
-							"// Guarda los valores en variables de entorno o de colección\r",
-							"pm.environment.set(\"accountType\", accountType);\r",
-							"pm.environment.set(\"accountNumber\", accountNumber);\r",
-							"pm.environment.set(\"signer\", signer);\r",
-							"\r",
-							"\r",
-							"// Define el array de posibles valores\r",
-							"let accountTypes = [\"SAVING_ACCOUNT\", \"CURRENT_ACCOUNT\", \"LOW_DEPOSIT\", \"ORDINARY_DEPOSIT\", \"INCLUSIVE_LOW_AMOUNT\"];\r",
-							"\r",
-							"// Genera un índice aleatorio\r",
-							"let randomIndex = Math.floor(Math.random() * accountTypes.length);\r",
-							"\r",
-							"// Selecciona un valor aleatorio del array\r",
-							"let randomAccountType = accountTypes[randomIndex];\r",
-							"\r",
-							"// Guarda el valor en una variable de entorno o de colección\r",
-							"pm.environment.set(\"randomAccountType\", randomAccountType);\r",
-							"\r",
-							"// Si prefieres usar una variable de colección, usa:\r",
-							"// pm.collectionVariables.set(\"randomAccountType\", randomAccountType);\r",
-							"\r",
-							"\r",
-							""
+							"// Imprimir el comentario en la consola de Newman\r",
+							"console.log(\"Comentario del caso de prueba: \", pm.iterationData.get(\"comentario\"));"
 						],
 						"type": "text/javascript",
 						"packages": {}
@@ -136,7 +103,9 @@
 							"let responseData = pm.response.json();\r",
 							"pm.test(\"Status code is 401\", function () {\r",
 							"    pm.response.to.have.status(401);\r",
-							"});"
+							"});\r",
+							"// Imprimir el comentario en la consola de Newman\r",
+							"console.log(\"Comentario del caso de prueba: \", pm.iterationData.get(\"comentario\"));"
 						],
 						"type": "text/javascript",
 						"packages": {}
@@ -190,7 +159,10 @@
 							"let responseData = pm.response.json();\r",
 							"pm.test(\"Status code is 401\", function () {\r",
 							"    pm.response.to.have.status(401);\r",
-							"});"
+							"});\r",
+							"\r",
+							"// Imprimir el comentario en la consola de Newman\r",
+							"console.log(\"Comentario del caso de prueba: \", pm.iterationData.get(\"comentario\"));"
 						],
 						"type": "text/javascript",
 						"packages": {}
@@ -249,7 +221,9 @@
 							"let responseData = pm.response.json();\r",
 							"pm.test(\"Status code is 401\", function () {\r",
 							"    pm.response.to.have.status(401);\r",
-							"});"
+							"});\r",
+							"// Imprimir el comentario en la consola de Newman\r",
+							"console.log(\"Comentario del caso de prueba: \", pm.iterationData.get(\"comentario\"));"
 						],
 						"type": "text/javascript",
 						"packages": {}
