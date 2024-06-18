@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "75ddfbf8-c01a-4c54-845a-a9f6567f19db",
-		"name": "Codigos 401",
+		"_postman_id": "410d792b-1da8-4369-88a8-62f6ac63443b",
+		"name": "Codigos 401 Post",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "34404218"
 	},
@@ -54,7 +54,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"user\": {\r\n    \"firstName\": \"Jhony 332\",\r\n    \"secondName\": \"Estevan 3\",\r\n    \"firstLastName\": \"Agudelo 3\",\r\n    \"secondLastName\": \"Villada 3\",\r\n    \"documentType\": \"CC\",\r\n    \"documentNumber\": \"{{randomNumber}}\",\r\n    \"userType\": \"PJ\",\r\n    \"merchantName\": \"d552\"\r\n  },\r\n  \"account\": {\r\n    \"accountType\": \"{{randomAccountType}}\",\r\n    \"accountNumber\": \"{{randomNumber}}\",\r\n    \"entityCode\": \"1020\",\r\n    \"signer\":\"{{$randomPassword}}\"\r\n  },\r\n  \"key\": {\r\n    \"keyType\": \"ID\",\r\n    \"keyValue\": \"{{randomNumber}}\"\r\n  }\r\n}",
+					"raw": "{\r\n  \"user\": {\r\n    \"firstName\": \"Jhony 332\",\r\n    \"secondName\": \"Estevan 3\",\r\n    \"firstLastName\": \"Agudelo 3\",\r\n    \"secondLastName\": \"Villada 3\",\r\n    \"documentType\": \"CC\",\r\n    \"documentNumber\": \"{{randomNumber}}\",\r\n    \"userType\": \"PJ\",\r\n    \"merchantName\": \"d552\"\r\n  },\r\n  \"account\": {\r\n    \"accountType\": \"CURRENT_ACCOUNT\",\r\n    \"accountNumber\": \"{{randomNumber}}\",\r\n    \"entityCode\": \"1020\",\r\n    \"signer\":\"{{$randomPassword}}\"\r\n  },\r\n  \"key\": {\r\n    \"keyType\": \"ID\",\r\n    \"keyValue\": \"{{randomNumber}}\"\r\n  }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -71,188 +71,6 @@
 						"entities",
 						"2",
 						"keys"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Actualizar Llave",
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							"// Genera un valor aleatorio entre 0 y 1\r",
-							"let randomValue = Math.random();\r",
-							"\r",
-							"// Determina el estado basado en el valor aleatorio\r",
-							"let status = randomValue < 0.5 ? \"LOCK\" : \"ACTIVE\";\r",
-							"\r",
-							"// Guarda el estado en una variable de entorno o de colección\r",
-							"pm.environment.set(\"randomStatus\", status);"
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"let responseData = pm.response.json();\r",
-							"pm.test(\"Status code is 401\", function () {\r",
-							"    pm.response.to.have.status(401);\r",
-							"});\r",
-							"// Imprimir el comentario en la consola de Newman\r",
-							"console.log(\"Comentario del caso de prueba: \", pm.iterationData.get(\"comentario\"));"
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				}
-			],
-			"request": {
-				"method": "PATCH",
-				"header": [
-					{
-						"key": "client-id",
-						"value": "{{client-id}}"
-					},
-					{
-						"key": "client-secret",
-						"value": "{{client-secret}}"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n  \"status\": \"{{randomStatus}}\",\r\n  \"account\": {\r\n    \"accountType\": \"{{accountType}}\",\r\n            \"accountNumber\": \"{{accountNumber}}\",\r\n            \"signer\": \"{{signer}}\"\r\n  }\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{base-url}}/fd/entities/2/keys/{{id}}",
-					"host": [
-						"{{base-url}}"
-					],
-					"path": [
-						"fd",
-						"entities",
-						"2",
-						"keys",
-						"{{id}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Consultar Llave",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"let responseData = pm.response.json();\r",
-							"pm.test(\"Status code is 401\", function () {\r",
-							"    pm.response.to.have.status(401);\r",
-							"});\r",
-							"\r",
-							"// Imprimir el comentario en la consola de Newman\r",
-							"console.log(\"Comentario del caso de prueba: \", pm.iterationData.get(\"comentario\"));"
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "client-id",
-						"value": "{{client-id}}"
-					},
-					{
-						"key": "client-secret",
-						"value": "{{client-secret}}"
-					}
-				],
-				"url": {
-					"raw": "{{base-url}}/fd/entities/3/keys?keyType=ID&keyValue=90009012",
-					"host": [
-						"{{base-url}}"
-					],
-					"path": [
-						"fd",
-						"entities",
-						"3",
-						"keys"
-					],
-					"query": [
-						{
-							"key": "keyType",
-							"value": "ID"
-						},
-						{
-							"key": "keyValue",
-							"value": "90009012"
-						},
-						{
-							"key": "institutionId",
-							"value": "",
-							"disabled": true
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Consultar Llave id",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"let responseData = pm.response.json();\r",
-							"pm.test(\"Status code is 401\", function () {\r",
-							"    pm.response.to.have.status(401);\r",
-							"});\r",
-							"// Imprimir el comentario en la consola de Newman\r",
-							"console.log(\"Comentario del caso de prueba: \", pm.iterationData.get(\"comentario\"));"
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "client-id",
-						"value": "{{client-id}}"
-					},
-					{
-						"key": "client-secret",
-						"value": "{{client-secret}}"
-					}
-				],
-				"url": {
-					"raw": "{{base-url}}/fd/entities/2/keys/{{id}}",
-					"host": [
-						"{{base-url}}"
-					],
-					"path": [
-						"fd",
-						"entities",
-						"2",
-						"keys",
-						"{{id}}"
 					]
 				}
 			},
